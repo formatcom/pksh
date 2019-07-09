@@ -348,7 +348,10 @@ pko_read_dir(char *buf) {
     reply = (pkt_dread_rly *)&send_packet[0];
     reply->cmd = htonl(DREAD_RLY);
     reply->len = htons(sizeof(pkt_dread_rly));
-    reply->retval = htonl((int)dirp = readdir((DIR *)ntohl(pkt->fd)));
+
+	dirp = readdir((DIR *)ntohl(pkt->fd));
+
+    reply->retval = htonl((int)dirp);
     if ( dirp != 0 ) {
         stat(dirp->d_name, &st);
 
@@ -358,7 +361,7 @@ pko_read_dir(char *buf) {
         if (S_ISLNK(st.st_mode)) { reply->mode |= 0x08; }
         if (S_ISREG(st.st_mode)) { reply->mode |= 0x10; }
         reply->mode = htonl(reply->mode);
-        
+
         // add attributes
         reply->attr = htonl(0);
 

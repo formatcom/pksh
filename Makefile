@@ -81,7 +81,7 @@ zip:
 	@echo "../loadclients.tar.gz"
 
 clean:
-	$(RM) *.o *.so
+	$(RM) *.o *.so pksh npsh
 
 docs:
 	doxygen doxy.conf
